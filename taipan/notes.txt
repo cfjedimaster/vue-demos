@@ -1,0 +1,10 @@
+
+Screens:
+
+1) Home/Intro
+
+2) Enter your name
+
+3) Port view
+
+4) "travel" view (N seconds)
