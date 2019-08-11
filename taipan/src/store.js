@@ -74,10 +74,8 @@ export default new Vuex.Store({
     money:0,
     turn:0,
     holdSize:100,
-    hold:[
-    ],
-    prices: [
-    ],
+    hold:[],
+    prices: [],
     damage:0
   },
   mutations: {
@@ -101,6 +99,9 @@ export default new Vuex.Store({
     },
     setName(state, name) {
       state.name = name;
+    },
+    setPort(state, idx) {
+      state.port = PORTS[idx];
     }
   },
   getters: {
@@ -108,6 +109,9 @@ export default new Vuex.Store({
       let years = Math.floor((state.turn-1)/12);
       let month = (state.turn-1) % 12;
       return `${MONTHS[month]} ${BASE_YEAR + years}`;
+    },
+    ports() {
+      return PORTS.map(p => { return p.name });
     }
   },
   actions: {

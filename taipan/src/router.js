@@ -28,6 +28,15 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "game" */ './views/Game.vue')
-    }
+    },
+    {
+      path: '/travel',
+      name: 'travel',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "travel" */ './views/Travel.vue')
+    },
+
   ]
 })
