@@ -16,7 +16,7 @@
 		</p>
 		<p v-if="keyState == 'Move'">
 			Move to 
-				<span v-for="(p, i) in ports">{{ i+1 }}) {{ p }} </span>
+				<span v-for="(p, i) in ports" :key="i">{{ i+1 }}) {{ p }} </span>
 			<br/>
 			Or <code>C</code> to cancel.
 		</p>
@@ -38,18 +38,11 @@ export default {
 		Hold, Prices
 	},
 	created() {
-		console.log('created called');
 		this.$store.commit('newTurn');
-		
-		if(!window.moverAdded) {
-			console.log('ADDING EVENT HANDLER');
-			window.addEventListener("keypress", e => {
-				let typed = String.fromCharCode(e.keyCode);
-				this.doCommand(typed);
-				window.moverAdded = 1;
-			});
-		}
-
+		window.addEventListener('keypress', this.doCommand);
+	},
+	destroyed() {
+		window.removeEventListener('keypress', this.doCommand);
 	},
 	computed: {
 		captain() {
@@ -66,9 +59,9 @@ export default {
 		}
 	},
 	methods: {
-		doCommand(cmd) {
+		doCommand(e) {
+			let cmd = String.fromCharCode(e.keyCode).toLowerCase();
 
-			cmd = cmd.toLowerCase(); console.log('cmd', cmd, ' keyState', this.keyState);
 			/*
 			How we respond depends on our state. If keyState is null, 
 			it meand we aren't doing anything, so BSM are valid.

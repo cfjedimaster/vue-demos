@@ -2,7 +2,7 @@
   <div id="app">
     <router-view/>
     <p/>
-    <router-link to="/">Temp reset</router-link>
+    <a href="/">Temp reset</a>
   </div>
 </template>
 
