@@ -71,7 +71,7 @@ export default new Vuex.Store({
   state: {
     name:'',
     port:null,
-    money:0,
+    money:10000,
     turn:0,
     holdSize:100,
     hold:[],
@@ -97,6 +97,19 @@ export default new Vuex.Store({
       });
 
     },
+    purchase(state, order) {
+      console.log('try to buy '+order.good.name + ' amt '+order.qty);
+      let total = order.good.price * order.qty;
+      if(total <= state.money) {
+        state.hold.forEach((h,i) => {
+          console.log('h is '+h);
+          if(h.name === order.good.name) {
+            state.hold[i].quantity += order.qty;
+            state.money -= total;
+          }
+        });
+      }
+    },
     setName(state, name) {
       state.name = name;
     },
@@ -110,8 +123,18 @@ export default new Vuex.Store({
       let month = (state.turn-1) % 12;
       return `${MONTHS[month]} ${BASE_YEAR + years}`;
     },
+    goods() {
+      return GOODS.map(g => { return g.name });
+    },
     ports() {
       return PORTS.map(p => { return p.name });
+    },
+    shipUsedSpace(state) {
+      let used = 0;
+      state.hold.forEach(h => {
+        used += h.quantity;
+      });
+      return used;
     }
   },
   actions: {
