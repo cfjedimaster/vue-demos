@@ -8,3 +8,6 @@ Screens:
 3) Port view
 
 4) "travel" view (N seconds)
+
+
+Keyboard handling: https://forum.vuejs.org/t/capture-keypress-for-all-keys/14560
