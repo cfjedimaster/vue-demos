@@ -37,6 +37,18 @@
 			Or <code>C</code> to cancel.
 		</p>
 
+		<p v-if="keyState == 'Sell'">
+
+			Sell 
+				<input v-model.number="toSellQty" type="number" min="0"> units of 
+				<select v-model="toSell">
+				<option v-for="(s, i) in prices" :value="s" :key="i">{{ s.name }}</option>
+				</select> 
+				for {{ sellPrice | num }}.
+				<button :disabled="cantSell" @click="sellGoods">Sell</button>
+			<br/>
+			Or <code>C</code> to cancel.
+		</p>
 
 	</div>
 </template>
@@ -51,7 +63,9 @@ export default {
 			keyState:null,
 			ray:null,
 			toBuy:null,
-			toBuyQty:0
+			toBuyQty:0,
+			toSell:null,
+			toSellQty:0
 		}
 	},
 	components:{
@@ -74,11 +88,27 @@ export default {
 				this.toBuyQty + this.shipUsedSpace > this.holdSize
 			)
 		},
+		cantSell() {
+			if(this.toSell === null) return true;
+			let avail = 0;
+			for(let i=0;i<this.hold.length;i++) {
+				if(this.hold[i].name === this.toSell.name) {
+					avail = this.hold[i].quantity;
+				}
+			}
+			console.log('avail is '+avail);
+			return (
+				this.toSellQty > avail
+			)
+		},
 		captain() {
 			return this.$store.state.name;
 		},
 		date() {
 			return this.$store.getters.gameDate;
+		},
+		hold() {
+			return this.$store.state.hold;
 		},
 		holdSize() {
 			return this.$store.state.holdSize;
@@ -97,8 +127,14 @@ export default {
 		},
 		purchasePrice() {
 			if(!this.toBuy) return 0;
+			/* disabled due to warning about unexpected side effect, which makes sense
 			if(this.toBuyQty < 0) this.toBuyQty = 0;
+			*/
 			return this.toBuy.price * this.toBuyQty;
+		},
+		sellPrice() {
+			if(!this.toSell) return 0;
+			return this.toSell.price * this.toSellQty;
 		},
 		shipUsedSpace() {
 			return this.$store.getters.shipUsedSpace
@@ -111,7 +147,14 @@ export default {
 			if(this.toBuyQty <= 0) return;
 
 			this.$store.commit('purchase', { good: this.toBuy, qty: this.toBuyQty });
+			this.keyState = null;
+		},
+		sellGoods() {
+			if(!this.toSell) return;
+			if(this.toSellQty <= 0) return;
 
+			this.$store.commit('sale', { good: this.toSell, qty: this.toSellQty });
+			this.keyState = null;
 		},
 		doCommand(e) {
 			let cmd = String.fromCharCode(e.keyCode).toLowerCase();
@@ -131,6 +174,9 @@ export default {
 
 				if(cmd === 's') {
 					console.log('Sell');
+					this.toSell = null;
+					this.toSellQty = 0;
+					this.keyState = 'Sell';
 				}
 
 				if(cmd === 'm') {
@@ -162,15 +208,14 @@ export default {
 				}
 			}
 
-			//keystate for move
-			if(this.keyState === 'Buy') {
+			//keystate for buy
+			if(this.keyState === 'Buy' || this.keyState === 'Sell') {
 
 				if(cmd === 'c') {
 					this.keyState = null;
 					return;
 				}
 
-				cmd = parseInt(cmd, 10);
 			}
 
 		}

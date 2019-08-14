@@ -110,6 +110,20 @@ export default new Vuex.Store({
         });
       }
     },
+    sale(state, order) {
+      console.log('try to sell '+order.good.name + ' amt '+order.qty);
+      let total = order.good.price * order.qty;
+      let holdIndex = -1;
+      for(let i=0;i<state.hold.length;i++) {
+        if(order.good.name === state.hold[i].name) {
+          holdIndex = i;
+          // do you have enough?
+          if(state.hold[i].quantity < order.qty) return;
+        }
+      }
+      state.hold[holdIndex].quantity -= order.qty;
+      state.money += total;
+    },
     setName(state, name) {
       state.name = name;
     },
