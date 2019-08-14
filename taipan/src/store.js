@@ -76,7 +76,9 @@ export default new Vuex.Store({
     holdSize:100,
     hold:[],
     prices: [],
-    damage:0
+    damage:0,
+    randomMessage:'',
+    newPortIndex:null
   },
   mutations: {
     /*
@@ -87,6 +89,47 @@ export default new Vuex.Store({
       GOODS.forEach(g => {
         state.hold.push({name:g.name, quantity: 0});
       });
+    },
+    /*
+    A random event is one of the following:
+      Nothing (ie nothing happened, no event
+      Storm sends you to X port
+      Storm damages you Y percentage points
+      Pirates attack - steal items + Y damage
+
+    Also note we skip random events for the first ten turns or so
+
+    */
+    generateRandomEvent(state, info) {
+      state.randomMessage = '';
+      //if(state.turn < 10) return;
+
+      let rand = getRandomInt(0, 100);
+
+      //nothing
+      //if(rand < 60) return;
+
+      if(rand >= 60 && rand < 70) {
+        console.log('storm redirection');
+        let newPort = null;
+
+        while(!newPort || newPort.name === info.destination.name) {
+          state.newPortIndex = getRandomInt(0, PORTS.length - 1);
+          newPort = PORTS[state.newPortIndex];
+        }
+        state.randomMessage = 'A storm has blown you off course to ' + newPort.name;
+        console.log(state.randomMessage);
+      }
+
+      if(rand >= 70 && rand < 80) {
+        let damage = getRandomInt(1, 12);
+        console.log('Storm damages you for '+damage);
+      }
+
+      if(rand >= 80) {
+        console.log('pirates attack and damage and steal shit');
+      }
+
     },
     newTurn(state) {
       state.turn++;
