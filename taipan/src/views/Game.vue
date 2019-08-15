@@ -6,7 +6,7 @@
 			Captain: {{captain}}<br/>
 			Money: {{ money | num }}<br/>
 			Ship Size: {{ holdSize | num }} (In Use: {{ shipUsedSpace | num }})<br/>
-			Damage: {{ damage }}<br/>
+			Damage: {{ damage }} (to repair, {{ repairCost }})<br/>
 			Debug keystate={{keyState }}, toBuy={{ toBuy }}
 		</p>
 
@@ -15,6 +15,7 @@
 		
 		<p v-if="!keyState">
 			<b>Menu:</b> Type <code>B</code> to buy, <code>S</code> to sell, 
+			<span v-if="damage"><code>R</code> to repair, </span>
 			<code>M</code> to go to another port or <code>Q</code> to quit.
 		</p>
 
@@ -51,6 +52,15 @@
 			Or <code>C</code> to cancel.
 		</p>
 
+		<p v-if="keyState == 'Repair'">
+
+			Spend 
+				<input v-model.number="toRepairQty" type="number" min="0"> on repairs. 
+				<button :disabled="cantRepair" @click="doRepair">Repair</button>
+			<br/>
+			Or <code>C</code> to cancel.
+		</p>
+
 	</div>
 </template>
 
@@ -66,7 +76,8 @@ export default {
 			toBuy:null,
 			toBuyQty:0,
 			toSell:null,
-			toSellQty:0
+			toSellQty:0,
+			toRepairQty:0
 		}
 	},
 	components:{
@@ -88,6 +99,9 @@ export default {
 				||
 				this.toBuyQty + this.shipUsedSpace > this.holdSize
 			)
+		},
+		cantRepair() {
+			return this.toRepairQty > this.money;
 		},
 		cantSell() {
 			if(this.toSell === null) return true;
@@ -135,6 +149,9 @@ export default {
 			if(this.toBuyQty < 0) this.toBuyQty = 0;
 			*/
 			return this.toBuy.price * this.toBuyQty;
+		},
+		repairCost() {
+			return this.$store.getters.repairCost;
 		},
 		sellPrice() {
 			if(!this.toSell) return 0;
@@ -188,6 +205,11 @@ export default {
 					this.keyState = 'Move';
 				}
 
+				if(cmd === 'r') {
+					console.log('Repair');
+					this.keyState = 'Repair';
+				}
+
 				if(cmd === 'q') {
 					this.$router.replace('/end');
 				}
@@ -225,7 +247,16 @@ export default {
 
 			}
 
+		},
+		doRepair() {
+			// in theory not needed
+			if(this.toRepairQty >= this.money) return;
+			if(this.toRepairQty >= this.repairCost) this.toRepairQty = this.repairCost;
+
+			this.$store.commit('repair', { total: this.toRepairQty, repairCost: this.repairCost });
+			this.keyState = null;
 		}
+
 		
 	}
 }

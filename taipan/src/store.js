@@ -105,7 +105,7 @@ export default new Vuex.Store({
       //if(state.turn < 10) return;
 
       let rand = getRandomInt(0, 100);
-
+rand=71;
       //nothing
       if(rand < 60) return;
 
@@ -155,6 +155,19 @@ export default new Vuex.Store({
         });
       }
     },
+    repair(state, {total, repairCost}) {
+      console.log('going to do a repair of '+total+ ' of  '+repairCost);
+      console.log('current damage is '+state.damage);
+      //what percent is total of state.
+      let perc = total / repairCost;
+      console.log('that perc is '+perc);
+      let repaired = Math.ceil(perc * state.damage);
+      console.log('total repaired is '+repaired);
+      state.damage -= repaired;
+      //sanity check
+      if(state.damage < 0) state.damage = 0;
+      state.money -= total;
+    },
     sale(state, order) {
       console.log('try to sell '+order.good.name + ' amt '+order.qty);
       let total = order.good.price * order.qty;
@@ -202,7 +215,8 @@ export default new Vuex.Store({
     },
     repairCost(state) {
       // the cost to repair is based on the size of your ship and how much damage;
-      let cost = state.holdSize
+      let cost = state.holdSize * state.damage * (1 + getRandomInt(1,10)/10);
+      return Math.floor(cost);
     },
     shipUsedSpace(state) {
       let used = 0;
