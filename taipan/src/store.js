@@ -105,7 +105,6 @@ export default new Vuex.Store({
       //if(state.turn < 10) return;
 
       let rand = getRandomInt(0, 100);
-rand=71;
       //nothing
       if(rand < 60) return;
 
@@ -121,14 +120,14 @@ rand=71;
         console.log(state.randomMessage);
       }
 
-      if(rand >= 70 && rand < 80) {
+      if(rand >= 70 && rand < 85) {
         let damage = getRandomInt(1, 12);
         console.log('Storm damages you for '+damage);
         state.randomMessage = 'A violent storm damages your ship!';
         state.damage += damage;
       }
 
-      if(rand >= 80) {
+      if(rand >= 85) {
         console.log('pirates attack and damage and steal shit');
       }
 
