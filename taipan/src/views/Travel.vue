@@ -7,12 +7,19 @@
 		<p v-if="randomEvent">
 			{{ randomMessage }}
 		</p>
+
+		<p v-if="damage >= 100">
+			<strong>Your ship is completely destroyed!</strong>
+		</p>
 	</div>
 </template>
 
 <script>
 export default {
 	computed: {
+		damage() {
+			return this.$store.state.damage;
+		},
 		destination() {
 			return this.$route.params.destination;
 		},
@@ -34,15 +41,19 @@ export default {
 		}
 
 		let timeToWait = 1000;
-		// if there was a special event, we need more time to read
+		// if there was a special event, we need more time to read, and possibly end the game
 		if(this.randomEvent) {
 			timeToWait += 2000;
 		}
-		// The 2000 thing should be set in the state along w/ other game properties
+
 		setTimeout(() => {
 			console.log('done waiting');
-			this.$store.commit('setPort', destinationIndex);
-			this.$router.replace('/game');
+			if(this.damage >= 100) {
+				this.$router.replace('/end');
+			} else {
+				this.$store.commit('setPort', destinationIndex);
+				this.$router.replace('/game');
+			}
 		}, timeToWait);
 	}
 }

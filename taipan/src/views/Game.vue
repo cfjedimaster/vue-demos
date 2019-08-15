@@ -6,6 +6,7 @@
 			Captain: {{captain}}<br/>
 			Money: {{ money | num }}<br/>
 			Ship Size: {{ holdSize | num }} (In Use: {{ shipUsedSpace | num }})<br/>
+			Damage: {{ damage }}<br/>
 			Debug keystate={{keyState }}, toBuy={{ toBuy }}
 		</p>
 
@@ -13,8 +14,8 @@
 		<Prices />
 		
 		<p v-if="!keyState">
-			<b>Menu:</b> Type <code>B</code> to buy, <code>S</code> to sell, or
-			<code>M</code> to go to another port.
+			<b>Menu:</b> Type <code>B</code> to buy, <code>S</code> to sell, 
+			<code>M</code> to go to another port or <code>Q</code> to quit.
 		</p>
 
 		<p v-if="keyState == 'Move'">
@@ -104,6 +105,9 @@ export default {
 		captain() {
 			return this.$store.state.name;
 		},
+		damage() {
+			return this.$store.state.damage;
+		},
 		date() {
 			return this.$store.getters.gameDate;
 		},
@@ -184,6 +188,9 @@ export default {
 					this.keyState = 'Move';
 				}
 
+				if(cmd === 'q') {
+					this.$router.replace('/end');
+				}
 				return;
 			}
 

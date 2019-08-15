@@ -107,7 +107,7 @@ export default new Vuex.Store({
       let rand = getRandomInt(0, 100);
 
       //nothing
-      //if(rand < 60) return;
+      if(rand < 60) return;
 
       if(rand >= 60 && rand < 70) {
         console.log('storm redirection');
@@ -124,6 +124,8 @@ export default new Vuex.Store({
       if(rand >= 70 && rand < 80) {
         let damage = getRandomInt(1, 12);
         console.log('Storm damages you for '+damage);
+        state.randomMessage = 'A violent storm damages your ship!';
+        state.damage += damage;
       }
 
       if(rand >= 80) {
@@ -185,6 +187,18 @@ export default new Vuex.Store({
     },
     ports() {
       return PORTS.map(p => { return p.name });
+    },
+    rank(state) {
+      // your final score is just based on money, cuz life
+      if(state.money < 10000) return 'Deck Hand';
+      if(state.money < 50000) return 'Ensign';
+      if (state.money < 100000) return 'Lieutenant';
+      if (state.money < 1000000) return 'Commander';
+      //below is 10 million, just fyi ;)
+      if (state.money < 10000000) return 'Captain';
+      //below is 100 million, just fyi ;)
+      if (state.money < 100000000) return 'Admiral';
+      return 'Grand Admiral';
     },
     shipUsedSpace(state) {
       let used = 0;
