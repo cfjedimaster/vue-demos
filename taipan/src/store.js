@@ -105,6 +105,7 @@ export default new Vuex.Store({
       //if(state.turn < 10) return;
 
       let rand = getRandomInt(0, 100);
+
       //nothing
       if(rand < 60) return;
 
@@ -113,7 +114,7 @@ export default new Vuex.Store({
         let newPort = null;
 
         while(!newPort || newPort.name === info.destination.name) {
-          state.newPortIndex = getRandomInt(0, PORTS.length - 1);
+          state.newPortIndex = getRandomInt(0, PORTS.length);
           newPort = PORTS[state.newPortIndex];
         }
         state.randomMessage = 'A storm has blown you off course to ' + newPort.name;
@@ -128,7 +129,33 @@ export default new Vuex.Store({
       }
 
       if(rand >= 85) {
+        //note, if your hold is empty, we ignore everything;
+        //now get the hold and filter to items with stuff
+        let heldItems = state.hold.filter(h => {
+          return h.quantity > 0;
+        });
+        if(heldItems.length === 0) return;
+
         console.log('pirates attack and damage and steal shit');
+        //first, do damange, bit less than storm to be nice
+        let damage = getRandomInt(1, 7);
+        console.log('Storm damages you for ' + damage);
+
+        console.log('state.hold with items',JSON.stringify(heldItems));
+        //select the index to steal
+        let stealIndex = getRandomInt(0, heldItems.length);
+        console.log('going to steal from '+JSON.stringify(heldItems[stealIndex]));
+        let stealAmt = getRandomInt(1, heldItems[stealIndex].quantity + 1);
+        console.log('stealing '+stealAmt);
+        let target = -1;
+        for(let i=0;i<state.hold.length;i++) {
+          if(heldItems[stealIndex].name === state.hold[i].name) target = i;
+        }
+
+        state.randomMessage = 'Pirates attack your ship and steal some cargo!';
+        state.damage += damage;
+        state.hold[target].quantity -= stealAmt;
+
       }
 
     },
