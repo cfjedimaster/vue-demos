@@ -200,6 +200,10 @@ export default new Vuex.Store({
       if (state.money < 100000000) return 'Admiral';
       return 'Grand Admiral';
     },
+    repairCost(state) {
+      // the cost to repair is based on the size of your ship and how much damage;
+      let cost = state.holdSize
+    },
     shipUsedSpace(state) {
       let used = 0;
       state.hold.forEach(h => {
