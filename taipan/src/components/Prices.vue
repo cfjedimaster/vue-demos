@@ -12,8 +12,8 @@
 				</thead>
 				<tbody>
 					<tr v-for="p in prices" :key="p.name">
-						<td>{{ p.name }}</td>
-						<td>{{ p.price }}</td>
+						<td>{{ p.name }}:</td>
+						<td>{{ p.price | num }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -34,6 +34,6 @@ export default {
 
 <style scoped>
 form {
-	width: 400px;
+	width: 100%;
 }
 </style>

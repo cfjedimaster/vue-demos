@@ -1,18 +1,15 @@
 <template>
 	<div>
 		<p>
-			Date: {{ date }}<br/>
-			Current port: {{ port }}<br/>
-			Captain: {{captain}}<br/>
-			Money: {{ money | num }}<br/>
-			Ship Size: {{ holdSize | num }} (In Use: {{ shipUsedSpace | num }})<br/>
-			Damage: {{ damage }} (to repair, {{ repairCost }})<br/>
-			Debug keystate={{keyState }}, toBuy={{ toBuy }}
+			The date is {{ date }}, Captain {{captain}}. You are currently docked at {{ port }}.
 		</p>
 
-		<Hold />
-		<Prices />
-		
+		<div class="container">
+			<Stats />
+			<Hold />
+			<Prices />
+		</div>
+
 		<p v-if="!keyState">
 			<b>Menu:</b> Type <code>B</code> to buy, <code>S</code> to sell, 
 			<span v-if="damage"><code>R</code> to repair, </span>
@@ -67,6 +64,7 @@
 <script>
 import Hold from '@/components/Hold.vue'
 import Prices from '@/components/Prices.vue'
+import Stats from '@/components/Stats.vue'
 
 export default {
 	data() {
@@ -81,7 +79,7 @@ export default {
 		}
 	},
 	components:{
-		Hold, Prices
+		Hold, Prices, Stats
 	},
 	created() {
 		this.$store.commit('newTurn');
@@ -261,3 +259,10 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+.container {
+	display: grid;
+	grid-template-columns: 33% 33% 33%
+}
+</style>

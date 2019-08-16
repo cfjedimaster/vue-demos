@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1>Setup</h1>
     <p>
-      To begin, enter your name, captain:
+      Enter your name, captain:
       <input v-model="name">
       <button @click="setName" :disabled="!name">Continue</button>
     </p>
@@ -13,7 +12,7 @@
 export default {
   data() {
     return {
-      name:'Temp'
+      name:'Juniper Montage'
     }
   },
   methods: {

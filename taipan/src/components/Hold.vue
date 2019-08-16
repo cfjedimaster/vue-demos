@@ -12,7 +12,7 @@
 				</thead>
 				<tbody>
 					<tr v-for="h in hold" :key="h.name">
-						<td>{{ h.name }}</td>
+						<td>{{ h.name }}:</td>
 						<td>{{ h.quantity }}</td>
 					</tr>
 				</tbody>
@@ -34,6 +34,6 @@ export default {
 
 <style scoped>
 form {
-	width: 400px;
+	width: 100%;
 }
 </style>

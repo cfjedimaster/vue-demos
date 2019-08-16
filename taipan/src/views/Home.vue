@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Taipan</h2>
     <p>
     Welcome to Taipan. In this game, you take on the role of a captain of a trading ship.
     You will buy and sell goods, move from port to port, and work on upgrading your ship
