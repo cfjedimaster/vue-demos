@@ -12,7 +12,7 @@
 export default {
   data() {
     return {
-      name:'Juniper Montage'
+      name:''
     }
   },
   methods: {
