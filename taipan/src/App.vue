@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <h2>Taipan</h2>
+    <h1>Taipan</h1>
     
     <router-view/>
-    <p/>
+    <!--
     <a href="/">Temp reset</a>
+    -->
   </div>
 </template>
 
@@ -14,5 +15,9 @@
   margin: 0 auto;
   width: 80%;
   min-width: 600px;
+}
+
+h1 {
+  font-family: 'Shojumaru', cursive;
 }
 </style>

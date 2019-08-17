@@ -10,6 +10,12 @@
 			<Prices />
 		</div>
 
+		<p v-if="canUpgrade">
+			<strong>Good News!</strong> You can upgrade your ship for {{ upgradeCost }}.
+			<span v-if="money < upgradeCost">Unfortunately you do not have the funds.</span>
+			<span v-else><button @click="doUpgrade">Purchase Upgrade</button></span>
+		</p>
+
 		<p v-if="!keyState">
 			<b>Menu:</b> Type <code>B</code> to buy, <code>S</code> to sell, 
 			<span v-if="damage"><code>R</code> to repair, </span>
@@ -114,6 +120,9 @@ export default {
 				this.toSellQty > avail
 			)
 		},
+		canUpgrade() {
+			return this.$store.state.offerUpgrade;
+		},
 		captain() {
 			return this.$store.state.name;
 		},
@@ -157,6 +166,9 @@ export default {
 		},
 		shipUsedSpace() {
 			return this.$store.getters.shipUsedSpace
+		},
+		upgradeCost() {
+			return this.$store.getters.upgradeCost;
 		}
 	},
 	methods: {
@@ -167,6 +179,9 @@ export default {
 
 			this.$store.commit('purchase', { good: this.toBuy, qty: this.toBuyQty });
 			this.keyState = null;
+		},
+		doUpgrade() {
+			this.$store.commit('upgrade', { cost: this.upgradeCost });
 		},
 		sellGoods() {
 			if(!this.toSell) return;

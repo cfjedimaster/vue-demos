@@ -61,6 +61,9 @@ const GOODS = [
 
 ];
 
+//how much each upgrade adds
+const HOLD_UPGRADE = 10;
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -71,7 +74,7 @@ export default new Vuex.Store({
   state: {
     name:'',
     port:null,
-    money:10000,
+    money:100000,
     turn:0,
     holdSize:100,
     hold:[],
@@ -102,10 +105,12 @@ export default new Vuex.Store({
     */
     generateRandomEvent(state, info) {
       state.randomMessage = '';
+      state.offerUpgrade = false;
+
       //if(state.turn < 10) return;
 
       let rand = getRandomInt(0, 100);
-
+rand = 91;
       //nothing
       if(rand < 60) return;
 
@@ -121,14 +126,14 @@ export default new Vuex.Store({
         console.log(state.randomMessage);
       }
 
-      if(rand >= 70 && rand < 85) {
+      if(rand >= 70 && rand < 80) {
         let damage = getRandomInt(1, 12);
         console.log('Storm damages you for '+damage);
         state.randomMessage = 'A violent storm damages your ship!';
         state.damage += damage;
       }
 
-      if(rand >= 85) {
+      if(rand >= 80 && rand < 90) {
         //note, if your hold is empty, we ignore everything;
         //now get the hold and filter to items with stuff
         let heldItems = state.hold.filter(h => {
@@ -158,6 +163,10 @@ export default new Vuex.Store({
 
       }
 
+      if(rand >= 90) {
+        state.offerUpgrade = true;
+      }
+      
     },
     newTurn(state) {
       state.turn++;
@@ -213,6 +222,12 @@ export default new Vuex.Store({
     },
     setPort(state, idx) {
       state.port = PORTS[idx];
+    },
+    upgrade(state, { cost }) {
+      console.log('doing an upgrade');
+      state.money -= cost;
+      state.holdSize += HOLD_UPGRADE;
+      state.offerUpgrade = false;
     }
   },
   getters: {
@@ -250,6 +265,11 @@ export default new Vuex.Store({
         used += h.quantity;
       });
       return used;
+    },
+    upgradeCost(state) {
+      // the cost to upgrade is based on the size of your ship;
+      let cost = state.holdSize * 200 * (1 + getRandomInt(5,10)/10);
+      return Math.floor(cost);
     }
   },
   actions: {
