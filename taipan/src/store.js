@@ -107,10 +107,10 @@ export default new Vuex.Store({
       state.randomMessage = '';
       state.offerUpgrade = false;
 
-      //if(state.turn < 10) return;
+      if(state.turn < 10) return;
 
       let rand = getRandomInt(0, 100);
-rand = 91;
+
       //nothing
       if(rand < 60) return;
 
