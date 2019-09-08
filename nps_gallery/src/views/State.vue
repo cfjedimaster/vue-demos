@@ -39,10 +39,6 @@ export default {
 
     this.state = this.$route.params.state;
     this.abbr = this.$route.params.abbr;
-    // temp hack 
-    if(!this.state) this.state = 'Test';
-    if(!this.abbr) this.abbr = 'LA';
-    console.log('state loaded', this.state);
     this.$store.dispatch('loadParks', this.abbr);
   }
 }
