@@ -1,0 +1,6 @@
+{
+  "env": {
+    "NPS_KEY":"@nps_key"
+  }
+}
+
