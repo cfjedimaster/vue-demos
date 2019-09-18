@@ -30,13 +30,11 @@
 					</b-col>
 				</b-row>
 
-				<div v-if="searching">
-					<b-row>
-						<b-col sm="12">
-							<i>Searching...</i>
-						</b-col>
-					</b-row>
-				</div>
+				<b-row v-if="searching">
+					<b-col sm="12">
+						<i>Searching...</i>
+					</b-col>
+				</b-row>
 
 				<b-row>
 					<b-col sm="3" class="my-3" v-for="result in results" class="result">
@@ -52,9 +50,11 @@
 					</b-col>
 				</b-row>
 
-				<div v-if="noResults">
-					Sorry, but no results were found. I blame Apple.
-				</div>
+				<b-row v-if="noResults">
+					<b-col sm="12">
+						Sorry, but no results were found. I blame Apple.
+					</b-col>
+				</b-row>
 
 			</b-container>
 		</div>
