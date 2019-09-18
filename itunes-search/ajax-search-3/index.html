@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<style>
+		[v-cloak] {display: none}
+		#app {
+			padding-top: 50px;
+		}
+		</style>
+		<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+		<script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+		<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+	</head>
+	<body>
+
+		<div id="app" v-cloak>
+			<b-container >
+				
+				<b-row>
+					<b-col sm="9">
+						<b-form-input v-model="term" type="search"></b-form-input>
+					</b-col>
+					<b-col sm="3">
+						<b-button @click="search" block variant="dark">Search</b-button>
+					</b-col>
+				</b-row>
+
+				<div v-if="searching">
+					<b-row>
+						<b-col sm="12">
+							<i>Searching...</i>
+						</b-col>
+					</b-row>
+				</div>
+
+				<b-row>
+					<b-col sm="4" class="mt-3" v-for="result in results" class="result">
+						<b-card :title="result.trackName"
+						img-top
+						:img-src="result.artworkUrl100">
+							<b-card-text>
+							From {{ result.artistName }}, released on {{result.releaseDate | formatDate}}.
+							</b-card-text>
+							<b-button @click="play(result.previewUrl)" variant="dark">&#9658; Play Sample</b-button>
+						</b-card>
+					</b-col>
+				</b-row>
+
+				<div v-if="noResults">
+					Sorry, but no results were found. I blame Apple.
+				</div>
+
+			</b-container>
+		</div>
+
+		<script src="app.js"></script>
+	</body>
+</html>
