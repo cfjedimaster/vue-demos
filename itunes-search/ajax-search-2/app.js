@@ -34,7 +34,6 @@ const app = new Vue({
 				this.audio.currentTime = 0;
 			}
 			this.audio = new Audio(s);
-			console.log(s);
 			this.audio.play();
 		}
 	}
