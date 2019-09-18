@@ -39,8 +39,9 @@
 				</div>
 
 				<b-row>
-					<b-col sm="4" class="mt-3" v-for="result in results" class="result">
+					<b-col sm="3" class="my-3" v-for="result in results" class="result">
 						<b-card :title="result.trackName"
+						class="h-100"
 						img-top
 						:img-src="result.artworkUrl100">
 							<b-card-text>
