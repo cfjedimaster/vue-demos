@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<title>Untappd Test</title>
+</head>
+<body>
+	<div id="app">
+
+		<button @click="login" v-if="showLogin">Login</button>
+
+		<div v-if="showStats">
+			<h1>Stats</h1>
+			<div v-if="showLoading">
+				<p>Please stand by, I'm loading your beer information.</p>
+			</div><div e-else>
+
+				<p>
+						<img :src="profile.user_avatar"><br/>
+						Username: {{ profile.user_name }}<br/>
+						Bio: {{ profile.bio }}<br/>
+						Total checkins: {{ profile.stats.total_checkins }}<br/>
+						Member since: {{ profile.date_joined }}
+				</p>
+
+				<p>
+				total unique: {{ stats.totalUnique }}<br/>
+				average rating: {{ stats.avgRating | numberFormat  }}<br/>
+				average Abv: {{ stats.avgAbv | numberFormat }}<br/>
+				average Ibu: {{ stats.avgIbu | numberFormat }}<br/>
+				</p>
+
+				<h3>Top Beers</h3>
+				<ul>
+					<li v-for="beer in topBeers">
+						<a :href="beer.url" target="_new">{{ beer.beer_name }}</a> by <a :href="beer.brewery.url" target="_new">{{ beer.brewery.brewery_name}}</a>, your rating: {{beer.rating}}
+					</li>
+				</ul>
+
+				<h3>Worst Beers</h3>
+				<p>
+					Note that we filter out ratings of 0 since that may represent you forgetting to rate it.
+				</p>
+				<ul>
+					<li v-for="beer in worstBeers">
+						<a :href="beer.url" target="_new">{{ beer.beer_name }}</a> by <a :href="beer.brewery.url" target="_new">{{ beer.brewery.brewery_name}}</a>, your rating: {{beer.rating}}
+					</li>
+				</ul>
+
+				<h3>Styles (Top 25)</h3>
+				<ul>
+					<li v-for="style in styles">
+						{{ style.name}} {{ style.value }}
+					</li>
+				</ul>
+
+			</div>
+		</div>
+
+	</div>
+	<script src="app.js"></script>
+</body>
+</html>
