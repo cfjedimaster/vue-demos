@@ -2,63 +2,112 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<title>Untappd Test</title>
+	<style>
+	[v-cloak] {display: none}
+	#app {
+		padding-top: 50px;
+	}
+	</style>
+	
+	<!-- Load required Bootstrap and BootstrapVue CSS -->
+	<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+	<!-- Load polyfills to support older browsers -->
+	<script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+
+	<!-- Load Vue followed by BootstrapVue -->
+	<script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+	<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
 </head>
 <body>
-	<div id="app">
+	<div id="app" v-cloak>
 
-		<button @click="login" v-if="showLogin">Login</button>
+		<b-container>
 
-		<div v-if="showStats">
-			<h1>Stats</h1>
-			<div v-if="showLoading">
-				<p>Please stand by, I'm loading your beer information.</p>
-			</div><div e-else>
-
+			<b-jumbotron header="Untappd Stats" lead="">
 				<p>
-						<img :src="profile.user_avatar"><br/>
-						Username: {{ profile.user_name }}<br/>
-						Bio: {{ profile.bio }}<br/>
-						Total checkins: {{ profile.stats.total_checkins }}<br/>
-						Member since: {{ profile.date_joined }}
+					This application demonstrates using the <a href="https://untappd.com/api/docs">Untappd API</a> to
+					gather stats about your beer checkins. In order to use this app, you must be an existing Untappd
+					user.
 				</p>
+				<b-button @click="login" v-if="showLogin" variant="success" size="lg">Login via Untappd</button-b>
 
-				<p>
-				total unique: {{ stats.totalUnique }}<br/>
-				average rating: {{ stats.avgRating | numberFormat  }}<br/>
-				average Abv: {{ stats.avgAbv | numberFormat }}<br/>
-				average Ibu: {{ stats.avgIbu | numberFormat }}<br/>
-				</p>
+			</b-jumbotron>
 
-				<h3>Top Beers</h3>
-				<ul>
-					<li v-for="beer in topBeers">
-						<a :href="beer.url" target="_new">{{ beer.beer_name }}</a> by <a :href="beer.brewery.url" target="_new">{{ beer.brewery.brewery_name}}</a>, your rating: {{beer.rating}}
-					</li>
-				</ul>
 
-				<h3>Worst Beers</h3>
-				<p>
-					Note that we filter out ratings of 0 since that may represent you forgetting to rate it.
-				</p>
-				<ul>
-					<li v-for="beer in worstBeers">
-						<a :href="beer.url" target="_new">{{ beer.beer_name }}</a> by <a :href="beer.brewery.url" target="_new">{{ beer.brewery.brewery_name}}</a>, your rating: {{beer.rating}}
-					</li>
-				</ul>
+			<div v-if="showStats">
 
-				<h3>Styles (Top 25)</h3>
-				<ul>
-					<li v-for="style in styles">
-						{{ style.name}} {{ style.value }}
-					</li>
-				</ul>
+				<div v-if="showLoading">
+					<p>Please stand by, I'm loading your beer information.</p>
+				</div><div v-else>
 
+					<b-row>
+						<b-col sm="3">
+			
+							<b-card :title="profile.user_name" :img-src="profile.user_avatar">
+								<b-card-text>
+								You've been a member since {{ profile.date_joined | dateFormat }}. 
+								You have checked in {{ profile.stats.total_checkins }} times covering 
+								{{ stats.totalUnique }} different beers. You've average rating is {{ stats.avgRating | numberFormat  }}.
+								The average ABV of your checkins is {{ stats.avgAbv | numberFormat }} and your average
+								IBU is {{ stats.avgIbu | numberFormat }}.
+								</b-card-text>
+							</b-card>
+
+						</b-col>
+						<b-col sm="9">
+
+							<h3>Top Beers</h3>
+							<ul>
+								<li v-for="beer in topBeers">
+									<a :href="beer.url" target="_new">{{ beer.beer_name }}</a> by <a :href="beer.brewery.url" target="_new">{{ beer.brewery.brewery_name}}</a>, your rating: {{beer.rating}}
+								</li>
+							</ul>
+
+							<h3>Worst Beers</h3>
+							<p>
+								Note that we filter out ratings of 0 since that may represent you forgetting to rate it.
+							</p>
+							<ul>
+								<li v-for="beer in worstBeers">
+									<a :href="beer.url" target="_new">{{ beer.beer_name }}</a> by <a :href="beer.brewery.url" target="_new">{{ beer.brewery.brewery_name}}</a>, your rating: {{beer.rating}}
+								</li>
+							</ul>
+
+							<h3>Styles (Top 20)</h3>
+							<b-table-simple>
+								<b-thead head-variant="dark">
+									<b-tr>
+										<b-th>Style</b-th>
+										<b-th>Checkins</b-th>
+									</b-tr>
+								</b-thead>
+								<b-tbody>
+									<b-tr v-for="style in styles">
+										<b-td>{{ style.name }}</b-td>
+										<b-td>{{ style.value }}</b-td>
+									</b-tr>
+								</b-tbody>
+							</b-table-simple>
+							<!--
+							<ul>
+								<li v-for="style in styles">
+									{{ style.name}} {{ style.value }}
+								</li>
+							</ul>
+						-->
+						</b-col>
+					</b-row>
+
+				</div>
 			</div>
-		</div>
+
+		</b-container>
 
 	</div>
 	<script src="app.js"></script>

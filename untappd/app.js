@@ -12,6 +12,11 @@ Vue.filter('numberFormat', d => {
     return d.toFixed(2);
 });
 
+Vue.filter('dateFormat', function(d) {
+	if(!window.Intl) return d;
+	return new Intl.DateTimeFormat('en-US').format(new Date(d));
+}); 
+
 const app = new Vue({
     el:'#app',
     data: {
@@ -66,7 +71,7 @@ const app = new Vue({
                 let meRequest = await fetch(API + `user/info?access_token=${this.access_token}`);
                 let profileData = await meRequest.json();
                 profile = profileData.response.user;
-console.log('profile', profile);
+
                 let hasMore = true;
                 // x is used as a sanity check and to keep us under the limit of 100. I use 90 so I have some wiggle room
                 let x = 0;
@@ -153,7 +158,7 @@ console.log('profile', profile);
                 if(a.value < b.value) return 1;
                 if(a.value > b.value) return -1;
                 return 0;
-            }).slice(0,25);
+            }).slice(0,20);
             this.styles = stylesArray;
 
         },
