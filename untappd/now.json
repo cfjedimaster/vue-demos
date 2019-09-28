@@ -1,0 +1,7 @@
+{
+	"env": {
+		"UT_CLIENTID": "@ut_clientid",
+		"UT_CLIENTSECRET": "@ut_clientsecret",
+		"UT_REDIRECT_URL": "@ut_redirect_url"
+	}
+}

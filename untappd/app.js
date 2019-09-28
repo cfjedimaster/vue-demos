@@ -23,6 +23,7 @@ const app = new Vue({
         access_token:null,
         showLogin:true,
         showStats:false,
+        showLoading:true,
         stats: {
             totalRating:0,
             totalAbv:0,
@@ -42,7 +43,6 @@ const app = new Vue({
             this.access_token = document.location.hash.split('=')[1];
             this.showLogin = false;
             this.showStats = true;
-            this.showLoading = false;
             await this.getBeers();
             this.prepareBeers();
         }
@@ -50,9 +50,9 @@ const app = new Vue({
     methods:{
         login() {
             console.log('attempting login');
-            let redirect_url = 'http://localhost:3333';
-            let url = `https://untappd.com/oauth/authenticate/?client_id=${CLIENTID}&response_type=token&redirect_url=${redirect_url}`;
-            document.location.href=url;
+            let redirect_url = 'https://untappd.raymondcamden.now.sh/api/auth';
+            let url = `https://untappd.com/oauth/authenticate/?client_id=${CLIENTID}&response_type=code&redirect_url=${redirect_url}`;
+            document.location.href = url;
         },
         async getBeers() {
             
@@ -60,7 +60,6 @@ const app = new Vue({
             Untappd has kinda tight limits on API calls so we need to cache.
             */
 
-            this.showLoading = true;
             console.log('get mah beers!');
             let beers = [];
             let profile = {};
@@ -77,7 +76,7 @@ const app = new Vue({
                 let x = 0;
                 let rootUrl = API + `user/beers/?access_token=${this.access_token}&limit=50`;
                 let thisUrl = rootUrl;
-                while(hasMore && x < 20) {
+                while(hasMore && x < 90) {
                     console.log(thisUrl);
                     let result = await fetch(thisUrl);
                     let data = await result.json();
@@ -90,7 +89,6 @@ const app = new Vue({
                     x++;
                 }
                 console.log('all done');
-                console.log(beers.length);
                 this.setCache(beers, profile);
             } else {
                 console.log('got from cache');
@@ -106,7 +104,7 @@ const app = new Vue({
         prepareBeers() {
             console.log('Im now going to do some data massaging so we can render');
             this.$set(this.stats, 'totalUnique', this.beers.length);
-            console.log(this.beers[0]);
+
             let myStyles = {};
             for(let i=0;i < this.beers.length; i++) {
 
