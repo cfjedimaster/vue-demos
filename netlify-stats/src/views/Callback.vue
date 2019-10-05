@@ -7,7 +7,6 @@
 <script>
 export default {
   created() {
-    console.log('created');
     if(document.location.hash && document.location.hash.indexOf('access_token') >= 0) {
       let access_token = document.location.hash.split('=')[1].split('&')[0];
       this.$store.commit('storeToken', access_token);

@@ -19,6 +19,24 @@ export default {
 		return result.data;
 	},
 
+	async getPageViews(token, site, from, to) {
+
+		let url = `https://analytics.services.netlify.com/v1/${site}/pageviews?from=${from}&to=${to}&timezone=-0500&limit=15`;
+		let response = await fetch(url,{ 
+			headers: new Headers({
+			  'Authorization': 'Bearer '+ token, 
+			})
+		});
+		let result = await response.json();
+		let data = result.data.map(i => {
+			return {
+				date:i[0],
+				views:i[1]
+			};
+		});
+		return data;
+	},
+
 	async getSites(token) {
 
 		let url = `https://api.netlify.com/api/v1/sites`;
@@ -33,7 +51,6 @@ export default {
 
 	async getSources(token, site, from, to) {
 
-		console.log('getSources');		
 		let url = `https://analytics.services.netlify.com/v1/${site}/sources?from=${from}&to=${to}&timezone=-0500&limit=15`;
 		let response = await fetch(url,{ 
 			headers: new Headers({

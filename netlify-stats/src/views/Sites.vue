@@ -43,13 +43,11 @@ export default {
 	async created() {
 		let sites = await netlify.getSites(this.$store.state.token);
 		this.sites = sites.filter(s => {
-			console.log(s.capabilities.analytics);
 			return typeof s.capabilities.analytics !== 'undefined';
 		});
 	},
 	methods: {
 		select(site) {
-			console.log('Selected', site);
 			this.$store.commit('storeSite', site);
 			this.$router.push('analytics');
 		}

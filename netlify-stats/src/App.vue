@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <!--
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    -->
+
     <b-container>
       <b-navbar type="dark" variant="dark" class="mb-3">
         <b-navbar-brand href="/">Netlify Stats</b-navbar-brand>
@@ -21,6 +16,7 @@
       <router-view/>
 
     </b-container>
+
   </div>
 </template>
 
@@ -33,7 +29,6 @@ export default {
 	},
 	computed:{
 		loggedIn() {
-      console.log('loggedIn', this.$store.state.token);
 			return this.$store.state.token;
 		}
 	}

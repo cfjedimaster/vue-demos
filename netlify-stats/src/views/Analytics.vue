@@ -32,6 +32,9 @@
 		<div v-if="working"><i>Getting data...</i></div>
 		<div v-if="hasStats">
 
+			<h3>Page Views (Total: {{totalPageViews | num}})</h3>
+			<PageViewsChart :views="pageViews" ></PageViewsChart>
+
 			<h3>Pages</h3>
 			<b-table :items="pages" striped hover :fields="pagesFields">
 				<template v-slot:cell(path)="data">
@@ -55,8 +58,12 @@
 
 <script>
 import netlify from '@/api/netlify';
+import PageViewsChart from '@/components/PageViewsChart';
 
 export default {
+	components: {
+		PageViewsChart
+	},
 	data() {
 		let today = new Date();
 		let lastWeek = new Date();
@@ -68,7 +75,9 @@ export default {
 			hasStats:false,
 			sources:null,
 			pages:null,
-			pagesFields:['path','count']
+			pagesFields:['path','count'],
+			pageViews:[],
+			totalPageViews:null
 		}
 	},
 	created() {
@@ -82,7 +91,6 @@ export default {
 	methods: {
 		async setDateRange() {
 			console.log('update our dates and refresh data');
-			console.log(this.from.getTime(), this.to.getTime());
 			this.working = true;
 			this.hasStats = false;
 			
@@ -96,6 +104,9 @@ export default {
 				return p;
 			});
 
+			this.pageViews = await netlify.getPageViews(this.$store.state.token, this.$store.state.site.site_id, this.from.getTime(), this.to.getTime());
+			this.totalPageViews = this.pageViews.reduce((acc, cur) => acc + cur.views,0);
+			console.log(JSON.stringify(this.pageViews[0]));
 			this.working = false;
 			this.hasStats = true;
 
