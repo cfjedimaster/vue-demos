@@ -11,7 +11,11 @@
             <v-text-field v-model="cat.age" label="Age" required type="numeric" min="0" max="30" />
           </v-col>
         </v-row>
-
+        <v-row>
+          <v-col>
+            <v-btn color="green" @click="save">Save Cat</v-btn>
+          </v-col>
+        </v-row>
       </v-container>
     </v-form>
 
@@ -27,9 +31,18 @@ export default {
     }
   },
   created() {
-    this.cat = this.$route.params.cat;
+    if(this.$route.params.cat) {
+      this.cat = this.$route.params.cat;
+    } else {
+      this.cat = { name:'', age: 0 };
+    }
   },
   methods: {
+    async save() {
+      await this.$store.dispatch('saveCat', this.cat);
+      console.log('back');
+      this.$router.push('/');
+    }
   }
 };
 </script>

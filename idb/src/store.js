@@ -18,10 +18,23 @@ export default new Vuex.Store({
       });
     },
     getCats(context) {
-      console.log('ran');
-      context.state.cats.push({name:'default cat', age:1, id: 1});
-      context.state.cats.push({ name: 'cat deux', age: 2, id: 2 });
-      console.log(context.state.cats);
+      if(context.state.cats.length === 0) {
+        context.state.cats.push({name:'default cat', age:1, id: 1});
+        context.state.cats.push({ name: 'cat deux', age: 2, id: 2 });
+      }
+    },
+    async saveCat(context, cat) {
+      if(cat.id) {
+        context.state.cats.forEach(c => {
+          if(c.id === cat.id) {
+            c.name = cat.name;
+            c.age = cat.age;
+          }
+        });
+      } else {
+        cat.id = context.state.cats.length+1;
+        context.state.cats.push(cat);
+      }
     }
   }
 })
