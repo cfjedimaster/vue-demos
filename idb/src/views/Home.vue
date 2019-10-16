@@ -34,9 +34,10 @@ export default {
     addCat() {
       this.$router.push({ name: 'edit' });
     },
-    deleteCat(cat) {
+    async deleteCat(cat) {
       console.log('delete', cat.id);
-      this.$store.dispatch('deleteCat', cat);
+      await this.$store.dispatch('deleteCat', cat);
+      this.$store.dispatch('getCats');
     },
     editCat(cat) {
       console.log('edit', cat.id);

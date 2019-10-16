@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import idb from '@/api/idb';
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,30 +13,19 @@ export default new Vuex.Store({
 
   },
   actions: {
-    deleteCat(context, cat) {
+    async deleteCat(context, cat) {
       console.log('store is being asked to delete '+cat.id);
-      context.state.cats = context.state.cats.filter(c => {
-        return c.id != cat.id;
+      await idb.deleteCat(cat); 
+    },
+    async getCats(context) {
+      context.state.cats = [];
+      let cats = await idb.getCats();
+      cats.forEach(c => {
+        context.state.cats.push(c);
       });
     },
-    getCats(context) {
-      if(context.state.cats.length === 0) {
-        context.state.cats.push({name:'default cat', age:1, id: 1});
-        context.state.cats.push({ name: 'cat deux', age: 2, id: 2 });
-      }
-    },
     async saveCat(context, cat) {
-      if(cat.id) {
-        context.state.cats.forEach(c => {
-          if(c.id === cat.id) {
-            c.name = cat.name;
-            c.age = cat.age;
-          }
-        });
-      } else {
-        cat.id = context.state.cats.length+1;
-        context.state.cats.push(cat);
-      }
+      await idb.saveCat(cat);
     }
   }
 })
