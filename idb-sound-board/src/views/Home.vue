@@ -48,6 +48,9 @@ export default {
     },
     play(s) {
       console.log('play '+JSON.stringify(s));
+      let player = new window.Audio();
+      player.src = window.URL.createObjectURL(s.blob);
+      player.play();
     }
   }
 }
