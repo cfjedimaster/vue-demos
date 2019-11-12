@@ -42,12 +42,10 @@ export default {
   },
   methods: {
     async deleteSound(sound) {
-      console.log('delete '+JSON.stringify(sound));
       await this.$store.dispatch('deleteSound', sound);
       this.$store.dispatch('loadSounds');
     },
     play(s) {
-      console.log('play '+JSON.stringify(s));
       let player = new window.Audio();
       player.src = window.URL.createObjectURL(s.blob);
       player.play();
