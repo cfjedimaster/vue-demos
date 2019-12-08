@@ -8,7 +8,7 @@
 
 	<div id="app">
 		<div class="chatBox" ref="chatBox"><span v-html="chat"></span></div>
-		<form><input v-model="msg" class="msg"><button @click="speak" :disabled="!msg" class="chatBtn">Chat</button></form>
+		<form @submit.prevent=""><input v-model="msg" class="msg"><button @click="speak" :disabled="!msg" class="chatBtn">Chat</button></form>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
