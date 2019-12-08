@@ -17,7 +17,13 @@ const app = new Vue({
 			this.$nextTick(() => {
 				// https://stackoverflow.com/a/40737063/52160
 				this.$refs.chatBox.scrollTop = this.$refs.chatBox.scrollHeight;
+
+				if(this.eliza.quit) {
+					alert('Your conversation is now over.');
+					window.location.reload(true);
+				}
 			});
+
 		}
 	}
 });
