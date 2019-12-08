@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<title>Vue-Eliza</title>
+		<script src="js/elizabot.js"></script>
+		<script src="js/elizadata.js"></script>
+		<link rel="stylesheet" href="style/app.css">
+	</head>
+
+	<div id="app">
+		<div class="chatBox" ref="chatBox"><span v-html="chat"></span></div>
+		<form><input v-model="msg" class="msg"><button @click="speak" :disabled="!msg" class="chatBtn">Chat</button></form>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="js/app.js"></script>
+	<body>
+</html>

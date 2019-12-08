@@ -1,0 +1,17 @@
+.chatBox {
+	width: 500px;
+	height: 100px;
+	border: solid thin;
+	margin-bottom: 5px;
+	font-size: 14px;
+	overflow: auto;
+}
+
+.msg {
+	width: 400px;
+	margin-right: 5px;
+}
+
+.chatBtn {
+	width: 95px;
+}
