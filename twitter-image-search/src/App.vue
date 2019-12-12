@@ -31,9 +31,15 @@
             <i>Loading...</i>
           </p>
         </div>
-        <div v-if="images">
-          <img v-for="(img,idx) in images" :key="idx" :src="img">
-        </div>
+
+        <v-container fluid v-if="images">
+          <v-row>
+            <v-col class="d-flex child-flex" cols="3" v-for="(img,idx) in images" :key="idx" >
+              <v-img :src="img" max-width="350" max-height="500" />
+            </v-col>
+          </v-row>
+        </v-container>
+
       </div>
 
     </v-content>
@@ -51,7 +57,7 @@ export default {
       authId: null,
       client: null,
       images: [],
-      user: "randomcomicbook",
+      user: 'oneperfectshot',
       loading: false
   }),
   mounted() {
@@ -71,18 +77,19 @@ export default {
       this.images = [];
       this.loading = true;
       let account = this.user;
-      if(account.charAt(0) !== '@') account = '@' + account;
+//      if(account.charAt(0) == '@') account = account;
       console.log(`loading images for ${account} and my auth is ${this.authId}`);
       this.client
         .integration("twitter")
         .auth(this.authId)
         .get(
-          `search/tweets.json?q=from%3A${account}+filter%3Amedia&count=100`
+          `search/tweets.json?q=from%3A${account}+filter%3Amedia&count=100&tweet_mode=extended`
         )
         .then(({ data }) => {
           this.loading = false;
           console.log(`Got ${data.statuses.length} tweets`);
           // in theory not needed since we asked for stuff with media
+          console.log(data.statuses[0]);
           let filtered = data.statuses.filter(t => {
             return (
               t.entities && t.entities.media && t.entities.media.length > 0
