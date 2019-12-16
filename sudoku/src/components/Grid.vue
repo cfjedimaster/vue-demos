@@ -3,7 +3,8 @@
     <table>
       <tbody>
       <tr v-for="(row,idx) in grid" :key="idx">
-        <td v-for="(cell,idy) in row" :key="idy"> {{ grid[idx][idy] }}</td>
+        <td v-for="(cell,idy) in row" :key="idy" :class="{ locked: grid[idx][idy].locked, selected:grid[idx][idy].selected }"
+        @click="setSelected(grid[idx][idy], idx, idy)"> {{ grid[idx][idy].value }}</td>
       </tr>
       </tbody>
     </table>
@@ -17,7 +18,13 @@ export default {
   name: 'Grid',
   computed: mapState([
     'grid'
-  ])
+  ]),
+  methods: {
+    setSelected(cell,x,y) {
+      console.log(cell,x,y);
+      this.$store.commit('setSelected',{x,y});
+    }
+  }
 }
 </script>
 
@@ -43,4 +50,15 @@ table tbody tr:nth-child(3), table tbody tr:nth-child(6) {
   border-bottom: 2px solid;
 }
 
+td.locked {
+  cursor: not-allowed;
+}
+
+td {
+  cursor: pointer;
+}
+
+td.selected {
+  background-color: bisque;
+}
 </style>
