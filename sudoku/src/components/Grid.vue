@@ -21,6 +21,7 @@ export default {
   ]),
   methods: {
     setSelected(cell,x,y) {
+      if(this.grid[x][y].locked) return;
       console.log(cell,x,y);
       this.$store.commit('setSelected',{x,y});
     }
