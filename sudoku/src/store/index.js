@@ -42,10 +42,18 @@ export default new Vuex.Store({
       }
     },
     setSelected(state, pos) {
-      // to do, mark all NOT selected
-      let row = state.grid[pos.x];
-      row[pos.y].selected = true;
-      Vue.set(state.grid[pos.x], row);
+     for(let i=0;i<state.grid.length;i++) {
+       let row = state.grid[i];
+       for(let x=0;x<row.length;x++) {
+         if((i !== pos.x || x !== pos.y) && row[x].selected) { 
+           row[x].selected = false;
+         }
+         if(i === pos.x && x === pos.y) {
+           row[x].selected = true;
+         }
+       }
+       Vue.set(state.grid, i, row);
+     }
     }
   },
   actions: {

@@ -32,7 +32,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 table {
-  width: 500px;
   border-collapse: collapse;
   border: 2px solid;
 }
@@ -41,6 +40,7 @@ td {
   border: 1px solid;
   text-align: center;
   height: 40px;
+  width: 40px;
 }
 
 table tbody tr td:nth-child(3), table tbody tr td:nth-child(6) {
