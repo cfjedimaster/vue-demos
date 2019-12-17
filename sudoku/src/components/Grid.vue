@@ -24,7 +24,6 @@ export default {
       let typed = parseInt(String.fromCharCode(e.keyCode),10);
       // if it was NaN, split out
       if(!typed) return;
-      console.log(typed);
       this.$store.commit('setNumber', typed);
     },
     setSelected(cell,x,y) {
