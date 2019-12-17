@@ -13,7 +13,8 @@ export default new Vuex.Store({
   state: {
     grid: null,
     origString:null,
-    difficulty:'hard'
+    difficulty:'hard',
+    selected:null
   },
   mutations: {
     initGrid(state) {
@@ -41,8 +42,16 @@ export default new Vuex.Store({
         }
       }
     },
+    setNumber(state, x) {
+      if(!state.selected) return;
+      let row = state.grid[state.selected.x];
+      row[state.selected.y].value = x;
+      console.log(state.grid[state.selected.x][state.selected.y].candidates);
+      Vue.set(state.grid, state.selected.x, row);
+    },
     setSelected(state, pos) {
-     for(let i=0;i<state.grid.length;i++) {
+      if(state.grid[pos.x][pos.y].locked) return;
+      for(let i=0;i<state.grid.length;i++) {
        let row = state.grid[i];
        for(let x=0;x<row.length;x++) {
          if((i !== pos.x || x !== pos.y) && row[x].selected) { 
@@ -50,6 +59,7 @@ export default new Vuex.Store({
          }
          if(i === pos.x && x === pos.y) {
            row[x].selected = true;
+           state.selected = pos;
          }
        }
        Vue.set(state.grid, i, row);

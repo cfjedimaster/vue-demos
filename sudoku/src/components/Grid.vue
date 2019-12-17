@@ -20,11 +20,22 @@ export default {
     'grid'
   ]),
   methods: {
+    pickNumber(e) {
+      let typed = parseInt(String.fromCharCode(e.keyCode),10);
+      // if it was NaN, split out
+      if(!typed) return;
+      console.log(typed);
+      this.$store.commit('setNumber', typed);
+    },
     setSelected(cell,x,y) {
-      if(this.grid[x][y].locked) return;
-      console.log(cell,x,y);
       this.$store.commit('setSelected',{x,y});
     }
+  },
+  mounted() {
+    window.addEventListener('keypress', this.pickNumber);
+  },
+  destroyed() {
+    window.removeEventListener('keypress', this.pickNumber);
   }
 }
 </script>
