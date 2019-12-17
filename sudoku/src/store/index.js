@@ -24,15 +24,19 @@ export default new Vuex.Store({
       let candidates = sudokuModule.sudoku.get_candidates(state.origString)
       state.grid = sudokuModule.sudoku.board_string_to_grid(state.origString);
 
+      let solution = sudokuModule.sudoku.solve(state.origString);
+      let solvedGrid = sudokuModule.sudoku.board_string_to_grid(solution);
+
       // change . to "", also store a ob instead of just numbers
       for(let i=0;i<state.grid.length;i++) {
         for(let x=0;x<state.grid[i].length;x++) {
 
           let newVal = {
-            value:state.grid[i][x],
+            value:parseInt(state.grid[i][x],10),
             locked:true,
             candidates:candidates[i][x],
-            selected:false
+            selected:false,
+            solution:parseInt(solvedGrid[i][x],10)
           };
           if(state.grid[i][x] === '.') {
             newVal.value = '';
