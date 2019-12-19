@@ -11,14 +11,15 @@ difficulty: easy,medium,hard,very-hard,insane,inhuman
 
 export default new Vuex.Store({
   state: {
+    difficulties: ["easy", "medium", "hard", "very-hard", "insane", "inhuman"],
     grid: null,
     origString:null,
-    difficulty:'hard',
     selected:null
   },
   mutations: {
-    initGrid(state) {
-      state.origString = sudokuModule.sudoku.generate(state.difficulty);
+    initGrid(state, difficulty) {
+      if(!difficulty) difficulty = state.difficulties[0];
+      state.origString = sudokuModule.sudoku.generate(difficulty);
       console.log('original string', state.origString);
 
       let candidates = sudokuModule.sudoku.get_candidates(state.origString)
