@@ -14,10 +14,12 @@ export default new Vuex.Store({
     difficulties: ["easy", "medium", "hard", "very-hard", "insane", "inhuman"],
     grid: null,
     origString:null,
-    selected:null
+    selected:null,
+    wonGame:false
   },
   mutations: {
     initGrid(state, difficulty) {
+      state.wonGame = false;
       if(!difficulty) difficulty = state.difficulties[0];
       state.origString = sudokuModule.sudoku.generate(difficulty);
       console.log('original string', state.origString);
@@ -60,6 +62,16 @@ export default new Vuex.Store({
       }
       console.log(state.grid[state.selected.x][state.selected.y].solution);
       Vue.set(state.grid, state.selected.x, row);
+      /*
+      did we win? this feels like it should be it's own method
+      */
+      let won = true;
+      for(let i=0;i<state.grid.length;i++) {
+        for(let x=0;x<state.grid[i].length;x++) {
+          if(state.grid[i][x].value !== state.grid[i][x].solution) won = false;
+        }
+      }
+      if(won) state.wonGame = true;
     },
     setSelected(state, pos) {
       if(state.grid[pos.x][pos.y].locked) return;
@@ -79,7 +91,5 @@ export default new Vuex.Store({
     }
   },
   actions: {
-  },
-  modules: {
   }
 })

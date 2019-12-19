@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <h1>Sudoku</h1>
+    <div v-if="wonGame">
+      <h2 class="wonGame">YOU WON!</h2>
+    </div>
     <Grid />
     <p>
       <select v-model="difficulty"> 
@@ -26,7 +29,7 @@ export default {
     }
   },
   computed: mapState([
-    'difficulties'
+    'difficulties', 'wonGame'
   ]),
   created() {
     this.$store.commit('initGrid');
@@ -44,4 +47,9 @@ export default {
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.wonGame {
+  color: green;
+  text-decoration: underline;
+}  
 </style>
