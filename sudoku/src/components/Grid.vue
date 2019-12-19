@@ -3,7 +3,12 @@
     <table>
       <tbody>
       <tr v-for="(row,idx) in grid" :key="idx">
-        <td v-for="(cell,idy) in row" :key="idy" :class="{ locked: grid[idx][idy].locked, selected:grid[idx][idy].selected }"
+        <td v-for="(cell,idy) in row" :key="idy" 
+        :class="{ 
+          locked: grid[idx][idy].locked, 
+          selected:grid[idx][idy].selected,
+          error:grid[idx][idy].error
+        }"
         @click="setSelected(grid[idx][idy], idx, idy)"> {{ grid[idx][idy].value }}</td>
       </tr>
       </tbody>
@@ -72,4 +77,10 @@ td {
 td.selected {
   background-color: bisque;
 }
+
+td.error {
+  color: red;
+}
+
+
 </style>

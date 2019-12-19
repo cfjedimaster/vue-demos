@@ -36,7 +36,8 @@ export default new Vuex.Store({
             locked:true,
             candidates:candidates[i][x],
             selected:false,
-            solution:parseInt(solvedGrid[i][x],10)
+            solution:parseInt(solvedGrid[i][x],10),
+            error:false
           };
           if(state.grid[i][x] === '.') {
             newVal.value = '';
@@ -50,7 +51,13 @@ export default new Vuex.Store({
       if(!state.selected) return;
       let row = state.grid[state.selected.x];
       row[state.selected.y].value = x;
-      console.log(state.grid[state.selected.x][state.selected.y].candidates);
+      // highlight incorrect answers
+      if(x !== state.grid[state.selected.x][state.selected.y].solution) {
+        row[state.selected.y].error = true;
+      } else {
+        row[state.selected.y].error = false;
+      }
+      console.log(state.grid[state.selected.x][state.selected.y].solution);
       Vue.set(state.grid, state.selected.x, row);
     },
     setSelected(state, pos) {
