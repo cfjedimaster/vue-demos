@@ -30,7 +30,6 @@ export default new Vuex.Store({
     gameOver(state, won) {
       state.gameOver = true;
       state.won = won;
-      console.log('WON is '+won);
     },
     initGame(state, word) {
       state.word = word;
@@ -87,6 +86,7 @@ export default new Vuex.Store({
         context.commit('setWords', text.split('\n'));
       }
       let selected = context.state.words[getRandomInt(0, context.state.words.length)];
+      //console.log('selected word',selected);
       context.commit('initGame', selected);
     }
   }

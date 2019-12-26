@@ -7,9 +7,8 @@
     </p>
 
     <div class="columns">
-
-      <div class="maskedWord">
-        {{ maskedWord }}
+      <div class="maskedWord"> 
+        <span v-if="gameOver">{{ word }}</span><span v-else>{{ maskedWord }}</span> 
       </div>
     
       <div>
@@ -20,6 +19,15 @@
 
     <div>
       Your Guesses: <span v-for="(letter,idx) in pickedLetters" :key="idx" class="guess">{{ letter }}</span>
+    </div>
+
+    <div v-if="gameOver" class="gameOver">
+      <span v-if="won">
+        Congratulations, you won!
+      </span><span v-else>
+        Sorry, you lost.
+      </span>
+      <button @click="newGame">Play Again</button>
     </div>
 
   </div>
@@ -33,7 +41,7 @@ export default {
   components: {
   },
   computed: {
-    ...mapState(["word", "pickedLetters", "misses"]),
+    ...mapState(["word", "pickedLetters", "misses", "gameOver", "won"]),
     ...mapGetters(["maskedWord",  "hangman"])
   },
   created() {
@@ -48,20 +56,7 @@ export default {
       let letter = String.fromCharCode(e.keyCode).toLowerCase();
       // hack as seen on multiple SO posts
       if(letter.toUpperCase() === letter.toLowerCase()) return;
-      console.log('letter guessed '+letter);
-      this.$store.dispatch('guess', letter);
-      this.$nextTick(() => {
-        if(this.$store.state.gameOver) {
-            window.removeEventListener('keypress', this.doGuess);
-            if(this.$store.state.won) {
-              alert('You Won!');
-              this.newGame();
-            } else {
-              alert('You lost! The word was '+this.word);
-              this.newGame();
-            }
-        }
-      });
+      this.$store.dispatch('guess', letter)
     }
   }
 }
@@ -88,4 +83,8 @@ export default {
 	grid-template-columns: 30% 80%;
 }
 
+.gameOver {
+  margin-top: 10px;
+  font-weight: bold;
+}
 </style>
