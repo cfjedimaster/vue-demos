@@ -50,7 +50,6 @@ export default {
 		async login() {
 			console.log('trying login');
 			let user = await fs.login();
-			console.log('got user');
 			this.user = user;
 			this.$store.dispatch('loadToDos');
 		},
