@@ -1,0 +1,10 @@
+## My Story
+
+This is the first madlib. It uses a {noun} 
+and a {verb} and {adjective}.
+
+---
+
+## My Foo
+
+The second one just has a {noun}
