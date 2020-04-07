@@ -1,10 +1,18 @@
-## My Story
+## The Star Spangled Banner
 
-This is the first madlib. It uses a {noun} 
-and a {verb} and {adjective}.
+Oh, say can you {verb} by the dawn's early {noun}
+What so {adverb} we {past tense verb} at the twilight's last gleaming?
+Whose broad {plural noun} and bright {plural noun} through the {adjective} fight,
+O'er the {plural noun} we watched were so gallantly {verb ending in -ing}?
+And the rocket's {color} glare, the {plural noun} bursting in {noun},
+Gave proof through the night that our {noun} was still there.
+Oh, say does that {adjective} banner yet {verb}
+O'er the land of the {adjective} and the home of the {adjective}?
 
 ---
 
-## My Foo
+## Computer are Fun
 
-The second one just has a {noun}
+I love my computer more than I love a {noun}. When I see a {adjective} computer, 
+I immediately think about the  {plural noun} inside it. I think about how they 
+{verb} to create programs and how many {plural noun} will be generated.
