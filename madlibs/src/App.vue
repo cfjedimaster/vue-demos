@@ -5,8 +5,11 @@
 </template>
 
 <style>
+body {
+  background-color: lightblue;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
-
 </style>
