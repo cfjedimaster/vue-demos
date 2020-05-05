@@ -5,7 +5,7 @@ export const player = {
 		str:0,
 		dex:0,
 		int:0,
-		gold:0,
+		gold:100,
 		exp:0
 	}, 
 	mutations: {

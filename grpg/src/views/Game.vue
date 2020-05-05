@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 66% 33%;
   row-gap: 10px;
 }
 
