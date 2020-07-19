@@ -77,7 +77,7 @@ const scaledTitles = [
 Chance to get a boon (out of 100), we add the scale too which gives higher monster a better chance of having a boon
 Since scale is 1-5, we double it
 */
-const boonChance = 200;
+const boonChance = 20;
 
 export const monsterMaker = {
 
