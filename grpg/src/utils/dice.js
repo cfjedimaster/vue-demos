@@ -1,3 +1,5 @@
+import { misc } from './misc'
+
 export const dice = {
 
 	/*
@@ -20,15 +22,9 @@ export const dice = {
 		
 		//console.log(rolls, sided);
 		for(let i=0;i<rolls;i++) {
-			total += getRandomIntInclusive(1, sided);
+			total += misc.getRandomIntInclusive(1, sided);
 		}
 		total += parseInt(bonus);
 		return total;
 	}
-}
-
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }
