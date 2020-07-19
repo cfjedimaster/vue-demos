@@ -52,7 +52,7 @@ const boons = {
 		negative: ["weak", "wimpy", "pushover", "meek"]
 	}, 
 	dex: {
-		positive: ["quick", "nimble", "spry", "dextrous"], 
+		positive: ["quick", "nimble", "spry", "dexterous"], 
 		negative: ["clumsy", "fumbly"]
 	}, 
 	int: {
