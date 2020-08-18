@@ -39,7 +39,29 @@ const baseMonsters = [
 		dex: "2d6", 
 		int: "1d6", 
 		hp: "2d6"
+	},
+	{
+		name: "troll", 
+		str: "1d6", 
+		dex: "1d6", 
+		int: "1d4", 
+		hp: "2d6"
+	},
+	{
+		name: "orc", 
+		str: "2d6", 
+		dex: "2d6", 
+		int: "1d4", 
+		hp: "1d6+4"
+	},
+	{
+		name: "evil clown", 
+		str: "1d6", 
+		dex: "1d6", 
+		int: "2d6", 
+		hp: "2d8"
 	}
+	
 ];
 
 /*
@@ -48,7 +70,7 @@ you get the boon, you get a title along with it. So a monster with extra str may
 */
 const boons = {
 	str: {
-		positive: ["strong", "ripped", "beefy"], 
+		positive: ["strong", "ripped", "beefy","swole"], 
 		negative: ["weak", "wimpy", "pushover", "meek"]
 	}, 
 	dex: {
