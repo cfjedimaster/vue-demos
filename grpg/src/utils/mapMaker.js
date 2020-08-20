@@ -11,6 +11,7 @@ Border used in draw is # just to make it more clear, not part of the data itself
 Town = H
 Dungeon entrace: O 
 Player = @ (not in map data though)
+Forest = }
 */
 
 export const mapMaker = {
@@ -47,6 +48,7 @@ export const mapMaker = {
 			let dX = misc.getRandomIntInclusive(height-4,height-1);
 			map[dX][dY] = 'O';
 		}
+
 		return map;
 	},
 	draw(map) {
@@ -75,4 +77,41 @@ function initializeMap(w, h) {
 		}
 	}
 	return map;
+}
+
+/*
+A forest, and other features, is done via a "splotch", given a random point, we
+circle it and add features as long as there's a connection, but it's random. So imagine:
+...
+.X.
+...
+
+We start from upper left and go clock wise, randomly adding more if there's an X near it, and there is:
+
+XX.
+.XX
+.XX
+
+Then we go again:
+
+XX...
+XXX..
+X.XXX
+..XXX
+.X..X
+
+Decided to punt on this. May return to it later.
+*/
+function makeSplotch(size) {
+	// note this can make a splotch of size+1, I'm ok with that..It's a splotch.
+	let rowsAbove = Math.floor(size/2);
+	let rowsBelow = rowsAbove;
+	let totalRows = rowsAbove + rowsBelow + 1;
+	console.log('totalRows', totalRows);
+	let splotch = [];
+	for(let x=0;x<size;x++) {
+		for(let y=0;y<totalRows;y++) {
+			splotch[x][y] = '';
+		}
+	}
 }
