@@ -5,27 +5,32 @@
 	</div>
 
 	<p>
-	Name: {{ $store.state.player.name }}<br/>
+	Name: {{ name }}<br/>
 	</p>
 
 	<p>
 	Attributes:<br/>
-	STR: {{ $store.state.player.str }}<br/>
-	DEX: {{ $store.state.player.dex }}<br/>
-	INT: {{ $store.state.player.int }}<br/>
+	STR: {{ str }}<br/>
+	DEX: {{ dex }}<br/>
+	INT: {{ int }}<br/>
 	</p>
 	
 	<p>
-	Gold: {{ $store.state.player.gold }}<br/>
-	XP: {{ $store.state.player.exp }}
+	Gold: {{ gold }}<br/>
+	XP: {{ exp }}
 	</p>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Stats',
   props: {
+  },
+  computed: {
+	...mapState('player', ['exp','gold','str','dex','int','name'])
   }
 }
 </script>

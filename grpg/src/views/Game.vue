@@ -1,7 +1,7 @@
 <template>
   <div class="container">
 
-    <Level />
+    <Map />
     <Stats />
     <div class="twocol">
       <Legend />
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import Level from '@/components/Level';
+import Map from '@/components/Map';
 import Stats from '@/components/Stats';
 import Legend from '@/components/Legend';
 
 export default {
-  components: { Level, Stats, Legend }
+  components: { Map, Stats, Legend }
 }
 </script>
 

@@ -6,7 +6,11 @@ export const player = {
 		dex:0,
 		int:0,
 		gold:100,
-		exp:0
+		exp:0,
+		pos: {
+			x:null, 
+			y:null
+		}
 	}, 
 	mutations: {
 		// utility method to set stats at once
@@ -17,6 +21,10 @@ export const player = {
 		},
 		setName(state, name) {
 			state.name = name;
+		},
+		setPosition(state, pos) {
+			state.pos.x = pos.x;
+			state.pos.y = pos.y;
 		}
 	}
 }

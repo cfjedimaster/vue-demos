@@ -25,6 +25,10 @@
 
 <script>
 import { dice } from '@/utils/dice';
+import { mapMaker } from '@/utils/mapMaker';
+
+const MAP_WIDTH = 100;
+const MAP_HEIGHT = 100;
 
 export default {
 	data() {
@@ -52,6 +56,16 @@ export default {
 		start() {
 			this.$store.commit('player/setName', this.newName);
 			this.$store.commit('player/setStats', { str: this.str, dex: this.dex, int: this.int });
+			let mapData = mapMaker.create(MAP_WIDTH, MAP_HEIGHT);
+			this.$store.commit('map/setMap', mapData.map);
+			// my position is always one lower than town
+			let myPos = {
+				x:mapData.town.x,
+				y:++mapData.town.y
+			};
+			console.log('myPos', myPos);
+			this.$store.commit('player/setPosition', { x:myPos.x, y:myPos.y });
+
 			this.$router.replace('game');
 		}
 	}

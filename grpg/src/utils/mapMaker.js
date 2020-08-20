@@ -49,7 +49,10 @@ export const mapMaker = {
 			map[dX][dY] = 'O';
 		}
 
-		return map;
+		return {
+			map:map,
+			town:center
+		};
 	},
 	draw(map) {
 		//utility function, may remove
