@@ -9,20 +9,44 @@ I'm currently breaking my own rules for 'empty' and using logic to show it as .
 
 Border used in draw is # just to make it more clear, not part of the data itself
 Town = H
+Dungeon entrace: O 
 Player = @ (not in map data though)
 */
 
 export const mapMaker = {
  
 	create(width,height) {
+
+		if(width < 10 || height < 10) throw new Error('Height and Width must be greater than or equal to 10');
+
 		//first, create the empty map
 		let map = initializeMap(width,height);
 
 		//assign the town to the center
 		let center = { x: Math.floor(width/2), y:Math.floor(height/2) };
 		map[center.x][center.y] = 'H';
-		
-		console.log(center);
+
+		/*
+		The dungeon is always located towards the edge. What edge is random
+		*/
+		let side = misc.getRandomIntInclusive(1,4);
+		if(side === 1) {
+			let dX = misc.getRandomIntInclusive(0, width-1);
+			let dY = misc.getRandomIntInclusive(0,3);
+			map[dX][dY] = 'O';
+		} else if(side === 2) {
+			let dX = misc.getRandomIntInclusive(0, width-1);
+			let dY = misc.getRandomIntInclusive(height-4,height-1);
+			map[dX][dY] = 'O';
+		} else if(side == 3) {
+			let dY = misc.getRandomIntInclusive(0, width-1);
+			let dX = misc.getRandomIntInclusive(0,3);
+			map[dX][dY] = 'O';
+		} else {
+			let dY = misc.getRandomIntInclusive(0, width-1);
+			let dX = misc.getRandomIntInclusive(height-4,height-1);
+			map[dX][dY] = 'O';
+		}
 		return map;
 	},
 	draw(map) {
