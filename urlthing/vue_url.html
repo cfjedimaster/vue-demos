@@ -1,0 +1,30 @@
+<html>
+<head>
+</head>
+
+<body>
+
+<div id="app">
+	<h2>Items</h2>
+
+	<p>
+	<input type="search" placeholder="Filter by name" v-model="filter"> 
+	<input type="checkbox" value="person" id="personType" v-model="typeFilter"> 
+	<label for="personType">Only People</label>
+	
+	<input type="checkbox" value="cat" id="catType" v-model="typeFilter"> 
+	<label for="catType">Only Cats</label>
+
+	<input type="checkbox" value="dog" id="dogType" v-model="typeFilter"> 
+	<label for="dogType">Only Dogs</label>
+	</p>
+
+	<ul>
+		<li v-for="item in items">{{ item.name }} ({{item.type }})</li>
+	</ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="vue_url2.js"></script>
+</body>
+</html>
