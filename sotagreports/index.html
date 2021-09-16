@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<style>
+	[v-cloak] {display: none}
+	</style>
+	<link type="text/css" rel="stylesheet" href="app.css" />
+	<script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+</head>
+<body>
+
+	<div id="app" v-cloak>
+
+		<h2>StackOverflow Tag Reporter</h2>
+		<p>
+		To begin, enter one or tags to report on below. Separate tags with a semicolon.
+		</p>
+		<p>
+		<input type="text" placeholder="Tags" v-model="tags"> <input type="submit" :value="buttonText" :disabled="submitDisabled" @click="generateReport">
+		</p>
+
+		<div v-if="reportReady">
+		<h2>Question Activity</h2>
+
+		<table>
+		<tr>
+		<td>Questions over all time:</td>
+		<td>{{ report.allTime.total }} (<span title="Unanswered">{{ report.allTime.unanswered }}</span>)</td>
+		</tr>
+		<tr>
+		<td>Questions over past week:</td>
+		<td>{{ report.last7.total }} (<span title="Unanswered">{{ report.last7.unanswered }}</span>)</td>
+		</tr>
+		<tr>
+		<td>Questions over past thirty days:</td>
+		<td>{{ report.last30.total }} (<span title="Unanswered">{{ report.last30.unanswered }}</span>)</td>
+		</tr>
+		</table>
+
+		<h2>Recent Questions</h2>
+
+		<p>
+		<span v-for="q in report.questions">
+		<a :href="q.link" target="_new">{{q.title}}</a> ({{q.dateAsked}})<br/>
+		</span>
+		</div>
+	</div>
+	<script src="app.js"></script>
+</body>
+</html>

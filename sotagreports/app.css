@@ -1,0 +1,10 @@
+[v-cloak] {display: none}
+
+input[type=text] {
+ width: 400px; 
+}
+
+body {
+ font-family: Arial; 
+}
+
