@@ -41,12 +41,16 @@
 		</tr>
 		</table>
 
-		<h2>Recent Questions</h2>
+		<h2>Recent Questions (Date/Views)</h2>
 
 		<p>
-		<span v-for="q in report.questions">
-		<a :href="q.link" target="_new">{{q.title}}</a> ({{q.dateAsked}})<br/>
-		</span>
+		<table>
+			<tr v-for="q in report.questions">
+				<td><a :href="q.link" target="_new">{{q.title}}</a></td>
+				<td class="qDate">{{q.dateAsked}}</td>
+				<td>{{q.view_count}} view(s)</td>
+			</tr>
+		</table>
 		</div>
 	</div>
 	<script src="app.js"></script>

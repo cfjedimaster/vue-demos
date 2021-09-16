@@ -6,7 +6,7 @@ const KEY = 'hXCaxJelmAanwzYWbAQxtA((';
 const url = `https://api.stackexchange.com/2.3/search?order=desc&sort=activity&site=stackoverflow&key=${KEY}`;
 const unansweredUrl = `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=activity&site=stackoverflow&accepted=true&key=${KEY}`;
 
-const Q_FILTER = '!Dhkbs-RuN3lsvE2-2';
+const Q_FILTER = '!DIzhTJ62V9COaWFYY';
 
 const app = new Vue({
 	el:'#app', 

@@ -8,3 +8,6 @@ body {
  font-family: Arial; 
 }
 
+td {
+	padding-right: 20px;
+}
